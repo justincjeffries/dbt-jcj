@@ -1,6 +1,6 @@
-{% docs order_status}
+{% docs order_status %}
 
-one of the following value:
+One of the following values:
 
 | status         | definition                                       |
 |----------------|--------------------------------------------------|
@@ -10,4 +10,4 @@ one of the following value:
 | return pending | Customer indicated they want to return this item |
 | returned       | Item has been returned                           |
 
- {% enddocs}
+{% enddocs %}
