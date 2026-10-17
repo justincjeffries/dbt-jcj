@@ -5,10 +5,10 @@ sources:
     tables:
       - name: customers
         columns:
-          - name: id
+          - name: customer_id
             data_tests:
-              - unique
-              - not_null
+           - unique
+          - not_null
       - name: orders
         config:
           freshness:
