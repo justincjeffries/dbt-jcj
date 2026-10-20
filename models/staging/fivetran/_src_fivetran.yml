@@ -14,3 +14,7 @@ sources:
             error_after:
               count: 30
               period: day
+      - name: orders
+        identifier: orders_fivetran
+      - name: payments
+        identifier: payments_fivetran
