@@ -1,14 +1,27 @@
-Welcome to your new dbt project!
+# dbt + Snowflake Analytics Pipeline
 
-### Using the starter project
+An end-to-end analytics pipeline built on the modern data stack.
 
-Try running the following commands:
-- dbt build
+## Overview
+CSV files in Google Drive are loaded into Snowflake by Fivetran. dbt transforms
+the raw data into tested, documented models, deployed to production with dbt
+platform jobs and reported in Power BI.
 
+## Tools
+Snowflake · dbt · Fivetran · GitHub · Power BI
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](http://slack.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+## Project structure
+- **Sources**: raw data in Snowflake (`RAW.JAFFLE_SHOP`, `RAW.STRIPE`,
+  `RAW.FIVETRAN_JAFFLE`), with freshness checks
+- **Staging** (`models/staging`): one cleaned model per source table; unions
+  manually loaded and Fivetran-loaded data
+- **Marts** (`models/marts`): `fct_orders` (one row per order with payment
+  totals) and `dim_customers` (one row per customer with lifetime value)
+- **Tests**: data tests on keys, accepted values, relationships, and payment totals
+
+## Environments
+- Development: `ANALYTICS.DBT_JUSTIN`
+- Production: `ANALYTICS.PROD`, built by a scheduled dbt platform job
+
+Based on the dbt Labs "dbt Fundamentals" course project, extended with a
+Fivetran source, multi-source unions, and production deployment.
