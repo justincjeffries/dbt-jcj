@@ -19,6 +19,17 @@ Snowflake · dbt · Fivetran · GitHub · Power BI
   totals) and `dim_customers` (one row per customer with lifetime value)
 - **Tests**: data tests on keys, accepted values, relationships, and payment totals
 
+## Build order (DAG)
+```
+RAW sources
+   ↓
+stg_jaffle_shop__customers   stg_jaffle_shop__orders   stg_stripe__payments
+          │                            └──────────┬──────────┘
+          │                                   fct_orders
+          └─────────────────┬───────────────────┘
+                       dim_customers
+```
+
 ## Environments
 - Development: `ANALYTICS.DBT_JUSTIN`
 - Production: `ANALYTICS.PROD`, built by a scheduled dbt platform job
