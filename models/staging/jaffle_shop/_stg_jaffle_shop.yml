@@ -1,30 +1,34 @@
+# _stg_jaffle_shop.yml: tests and descriptions for the jaffle_shop staging models.
+
 models:
+
+  # Customers staging model
   - name: stg_jaffle_shop__customers
     description: one unique customer per row
     columns:
       - name: customer_id
         description: the primary key for this table
-        data_tests:
+        data_tests:          # every customer_id must be unique and filled in
           - unique
           - not_null
 
+  # Orders staging model
   - name: stg_jaffle_shop__orders
     columns:
       - name: order_id
-        data_tests:
+        data_tests:          # every order_id must be unique and filled in
           - unique
           - not_null
       - name: status 
-        description: '{{ doc("order_status") }}'
-        data_tests:
+        description: '{{ doc("order_status") }}'   # pulls the status definitions from the docs file
+        data_tests:          # status must be one of these five values
           - accepted_values:
               arguments:
                 values: ['placed', 'shipped', 'completed', 'returned', 'return_pending']
               
       - name: customer_id
-        data_tests:
+        data_tests:          # every order's customer must exist in the customers model
           - relationships: 
               arguments:
                 to: ref('stg_jaffle_shop__customers')
                 field: customer_id
-       

@@ -1,25 +1,31 @@
+# _src_jaffle_shop.yml: tells dbt where the manually loaded raw data lives.
+
 sources:
-  - name: jaffle_shop
+  - name: jaffle_shop                 # name used in source('jaffle_shop', ...)
     description: A clone of a Postgres database
-    database: raw
-    schema: jaffle_shop
+    database: raw                     # Snowflake database
+    schema: jaffle_shop               # schema: RAW.JAFFLE_SHOP
     tables:
+
+      # Raw customers table
       - name: customers
         description: Raw customers data
         columns:
           - name: id
             description: the primary key for this table
-            data_tests:
+            data_tests:               # every raw id must be unique and filled in
               - unique
               - not_null
+
+      # Raw orders table
       - name: orders
         description: Raw orders data
         config:
-          freshness:
+          freshness:                  # warn after 24 hours without new data, error after 48
             warn_after:
               count: 24
               period: hour
             error_after:
               count: 48
               period: hour
-          loaded_at_field: _etl_loaded_at
+          loaded_at_field: _etl_loaded_at   # column used to check when data last arrived

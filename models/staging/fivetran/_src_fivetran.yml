@@ -1,20 +1,28 @@
+# _src_fivetran.yml: tells dbt where Fivetran loads the Google Drive CSV data.
+
 sources:
-  - name: fivetran_jaffle
-    database: raw
-    schema: fivetran_jaffle
+  - name: fivetran_jaffle      # name used in source('fivetran_jaffle', ...)
+    database: raw              # Snowflake database
+    schema: fivetran_jaffle    # schema Fivetran created: RAW.FIVETRAN_JAFFLE
     tables:
+
+      # Customers CSV
       - name: customers
-        identifier: customers_fivetran
+        identifier: customers_fivetran   # actual table name in Snowflake
         config:
-          loaded_at_field: _fivetran_synced
-          freshness:
+          loaded_at_field: _fivetran_synced   # column used to check when data last arrived
+          freshness:                          # warn after 7 days, error after 30
             warn_after:
               count: 7
               period: day
             error_after:
               count: 30
               period: day
+
+      # Orders CSV
       - name: orders
         identifier: orders_fivetran
+
+      # Payments CSV
       - name: payments
         identifier: payments_fivetran
