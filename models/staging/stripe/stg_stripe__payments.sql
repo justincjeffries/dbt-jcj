@@ -9,7 +9,7 @@ select
     status,
     amount / 100 as amount,  -- cents to dollars
     created as created_at
-from raw.stripe.payment
+from {{ source('stripe', 'payment') }}
 
 union all  -- stack both sources into one list (keeps all rows)
 
